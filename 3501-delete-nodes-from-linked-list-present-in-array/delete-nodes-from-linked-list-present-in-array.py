@@ -5,15 +5,15 @@
 #         self.next = next
 class Solution:
     def modifiedList(self, nums: List[int], head: Optional[ListNode]) -> Optional[ListNode]:
-        num_count = collections.Counter(nums)
-        dummy = ListNode(-1)
-        output = []
-        cur = dummy
-        while head:
-            if head.val not in num_count:
-                output.append(head.val)
+        num_set = set(nums)
+        while head and head.val in num_set:
             head = head.next
-        for n in output:
-            cur.next = ListNode(n)
-            cur = cur.next
-        return dummy.next
+        if not head:
+            return None
+        current = head
+        while current.next:
+            if current.next.val in num_set:
+                current.next = current.next.next
+            else:
+                current = current.next
+        return head
