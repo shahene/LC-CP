@@ -8,12 +8,12 @@ class Solution:
             mid = (l + r) // 2
             mid_calculated = mid * mid
             if mid_calculated == x:
-                return math.floor(mid)
+                return (mid)
             elif mid_calculated > x:
                 r = mid - 1
             else:
                 l = mid + 1
         # r is the largest intger since (r < l after loop ends) such that r * r <= x
-        return math.floor(r)
+        return (r)
             
         
