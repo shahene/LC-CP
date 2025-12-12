@@ -1,18 +1,21 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        if n == 1: return True
-        slow, fast = n, n
-        slow, fast = self.sum_square(slow), self.sum_square(self.sum_square(fast))
+        if n == 1: return True 
+        fast, slow = n, n
+        fast, slow = self.convert_number(self.convert_number(fast)), self.convert_number(slow)
         if slow == 1 or fast == 1: return True
-        while slow != fast:
+        while fast != slow:
             if slow == 1 or fast == 1:
                 return True
-            slow, fast = self.sum_square(slow), self.sum_square(self.sum_square(fast))
+            fast = self.convert_number(self.convert_number(fast))
+            slow = self.convert_number(slow) 
         return False
-    def sum_square(self, number):
-        squared_sum = 0
-        while number:
-            digit = number % 10
-            number = number // 10
-            squared_sum += (digit ** 2)
-        return squared_sum
+    def convert_number(self, n: int) -> int:
+        digit_sum = 0
+        while n:
+            digit_sum += ((n % 10) ** 2)
+            n = n // 10
+        return digit_sum
+    
+
+
