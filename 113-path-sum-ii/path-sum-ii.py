@@ -6,15 +6,15 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        current_path, output = [], []
-        self.recursive_path_sum(root, targetSum, current_path, output)
-        return output
-    def recursive_path_sum(self, node, targetSum, current_path, all_paths):
-        if not node: return
-        current_path.append(node.val)
-        if node.val == targetSum and not node.left and not node.right:
+        current_path, all_paths = [], []
+        self.path_recursive(root, current_path, all_paths, targetSum)
+        return all_paths
+    def path_recursive(self, root, current_path, all_paths, targetSum):
+        if not root: return
+        current_path.append(root.val)
+        if not root.left and not root.right and root.val == targetSum:
             all_paths.append(list(current_path))
         else:
-            self.recursive_path_sum(node.left, targetSum - node.val, current_path, all_paths)
-            self.recursive_path_sum(node.right, targetSum - node.val, current_path, all_paths)
+            self.path_recursive(root.left, current_path, all_paths, targetSum - root.val)
+            self.path_recursive(root.right, current_path, all_paths, targetSum - root.val)
         del current_path[-1]
