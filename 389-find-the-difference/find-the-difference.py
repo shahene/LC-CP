@@ -1,5 +1,6 @@
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        s_count, t_count = collections.Counter(s), collections.Counter(t)
-        for n in t:
-            if n not in s or s_count[n] != t_count[n]: return n
+        sum_ascii_s = sum([ord(n) for n in s])
+        sum_ascii_t = sum([ord(n) for n in t])
+        remaining_ascii = sum_ascii_t - sum_ascii_s
+        return chr(remaining_ascii)
