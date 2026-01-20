@@ -1,34 +1,17 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        maxLeft, maxRight, minLeftRight = [], [0] * len(height), []
-        maxLeft_n, maxRight_n = 0, 0
+        max_left, max_right, min_lr, total = [], [0] * len(height), [], 0
+        cur_left_max, cur_right_max = 0, 0
         for i in range(len(height)):
-            if i == 0:
-                maxLeft.append(0)
-            else:
-                maxLeft.append(maxLeft_n)
-            maxLeft_n = max(maxLeft_n, height[i])
-            
-        first_iter = True
+            max_left.append(cur_left_max)
+            cur_left_max = max(cur_left_max, height[i])
         for i in range(len(height) - 1, -1, -1):
-            if first_iter:
-                maxRight[i] = 0
-                first_iter = False
-            else:
-                maxRight[i] = maxRight_n
-            print(maxRight_n)
-            maxRight_n = max(maxRight_n, height[i])
-    
-        
-        min_lr = []
-        for l, r in zip(maxLeft, maxRight):
-            minimum_l_r = min(l, r)
-            min_lr.append(minimum_l_r)
-        total = 0
-        for i in range(len(min_lr)):
-            wtr_available = min_lr[i] - height[i]
-            if wtr_available < 0:
-                wtr_available = 0
-            total += wtr_available
-        return total
-
+            max_right[i] = cur_right_max
+            cur_right_max = max(cur_right_max, height[i])
+        i = 0
+        for l, r in zip(max_left, max_right):
+            minimum = min(l, r)
+            water = minimum - height[i] if minimum - height[i] >= 0 else 0
+            i += 1
+            min_lr.append(water)
+        return sum(min_lr)
