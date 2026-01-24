@@ -22,4 +22,4 @@ class Solution:
             i += 1
         return lcp
         
-        return lcp
+        
