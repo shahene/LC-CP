@@ -13,7 +13,6 @@ class Solution:
 
         dont return anything
         '''
-        visited_set = set()
         queue = collections.deque([])
         rows, cols = len(rooms), len(rooms[0])
         for r in range(rows):
@@ -28,8 +27,7 @@ class Solution:
                 old_r, old_c = queue.popleft()
                 for dr, dc in directions:
                     nr, nc = old_r + dr, old_c + dc
-                    if nr in range(rows) and nc in range(cols) and rooms[nr][nc] != -1 and rooms[nr][nc] != 0 and (nr, nc) not in visited_set:
+                    if nr in range(rows) and nc in range(cols) and rooms[nr][nc] == 2147483647:
                         rooms[nr][nc] = min(rooms[nr][nc], distance)
-                        visited_set.add((nr, nc))
                         queue.append((nr, nc))
         
