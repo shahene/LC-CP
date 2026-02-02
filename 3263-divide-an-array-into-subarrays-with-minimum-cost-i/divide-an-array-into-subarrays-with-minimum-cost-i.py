@@ -23,13 +23,14 @@ class Solution:
         return total
         O(n) time, O(1) space
         '''
-        total = nums[0]
+        total_cost = nums[0]
         first_smallest, second_smallest = math.inf, math.inf
         for i in range(1, len(nums)):
-            current_number = nums[i]
-            if current_number <= first_smallest:
+            val = nums[i]
+            if val < first_smallest:
                 second_smallest = first_smallest
-                first_smallest = current_number
-            elif current_number > first_smallest and current_number <= second_smallest:
-                second_smallest = current_number
-        return total + first_smallest + second_smallest
+                first_smallest = val
+            elif val < second_smallest:
+                second_smallest = val
+        total_cost += (first_smallest + second_smallest)
+        return total_cost
