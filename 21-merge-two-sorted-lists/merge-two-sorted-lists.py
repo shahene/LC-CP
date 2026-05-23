@@ -5,26 +5,27 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        '''
-        given the heads of two sorted linked lists list1 and list2
-        merge the two sorted lists into one sorted list
-
-        '''
         dummy = ListNode(-1)
-        current = dummy
+        curr = dummy
         while list1 and list2:
-            list1_val, list2_val = list1.val, list2.val
-            if list1_val < list2_val:
-                current.next = ListNode(list1_val)
+            val_1, val_2 = list1.val, list2.val
+            if val_1 < val_2:
+                curr.next = ListNode(val_1)
                 list1 = list1.next
             else:
-                current.next = ListNode(list2_val)
+                curr.next = ListNode(val_2)
                 list2 = list2.next
-            current = current.next
-        if list1:
-            current.next = list1
-        if list2:
-            current.next = list2
+            curr = curr.next
+        while list1:
+            val_1 = list1.val
+            curr.next = ListNode(val_1)
+            list1 = list1.next
+            curr = curr.next
+        while list2:
+            val_2 = list2.val
+            curr.next = ListNode(val_2)
+            list2 = list2.next
+            curr = curr.next
         return dummy.next
 
-        
+
