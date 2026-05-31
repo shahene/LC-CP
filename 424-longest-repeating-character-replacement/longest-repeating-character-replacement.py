@@ -1,37 +1,27 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
+        max_length = 0
+        # choose any character + k replacements -> 
         '''
-        given a string s and an integer k
-        choose any character of the string and change it to any other uppercase 
-        English character
-        can perform this operation at most k times
-        return length of longest string containing the same letter you can get after
-        performing the above operations
-
-        s = "ABAB", k = 2
-        SOLUTION:
-        greedy + sliding window approach
-        keep track of max repeating letter using frequency map
-        (r - l + 1) - max_repeating_letter
-        => returns all the remaining letters, which we can change if <= k
-        while above operation > k:
-            move left pointer up & subtract from frequency until condition does not hold
-        return max window that is valid
-        O(n) time -> only go through string once
-        O(n) space -> worst case for frequency map
+        sliding window of some kind
+        hashmap -- keeps track of number characters in window -- use it to get max_count
+        (r - l + 1) - max_count > k ==> invalid
+        if invalid:
+            from left start sliding -- l += 1
+        if valid:
+            record max length
         '''
-        l, max_repeating_letter, max_window, frequency_map = 0, 0, 0, {}
+        map_characters = {}
+        l = 0
+        max_char = 0
         for r in range(len(s)):
-            cur_char = s[r]
-            if cur_char not in frequency_map:
-                frequency_map[cur_char] = 0
-            frequency_map[cur_char] += 1
-            max_repeating_letter = max(max_repeating_letter, frequency_map[cur_char])
-            while (r - l + 1) - max_repeating_letter > k and l < len(s):
-                left_char = s[l]
-                frequency_map[left_char] -= 1
-                if frequency_map[left_char] == 0:
-                    del frequency_map[left_char]
+            if s[r] not in map_characters:
+                map_characters[s[r]] = 0
+            map_characters[s[r]] += 1 
+            max_char = max(max_char, map_characters[s[r]])
+            while ((r - l + 1) - max_char) > k:
+                map_characters[s[l]] -= 1
                 l += 1
-            max_window = max(max_window, r - l + 1)
-        return max_window
+            
+            max_length = max(max_length, r - l + 1)
+        return max_length
