@@ -1,17 +1,35 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        prefix_arr, postfix_arr = [], [1] * len(nums)
-        output = []
-        prefix, postfix = 1, 1
-        for i in range(len(nums)):
-            prefix *=  nums[i]
-            prefix_arr.append(prefix)
-        for i in range(len(nums) - 1, -1, -1):
-            postfix *= nums[i]
-            postfix_arr[i] = postfix
-        for i in range(len(nums)):
+        '''
+        get every value before nums[i] in the input array
+        and every value after nums[i] in the input array
+        multiply together
 
-            pre = prefix_arr[i-1] if i > 0 else 1
-            post = postfix_arr[i+1] if i != len(postfix_arr) - 1 else 1
-            output.append(pre * post)
+        O(n) time and space
+
+        prefix and postfix arrays
+        prefix = [1, 1, 2, 6]
+        postfix = [24 12, 4, 1]
+        '''
+        prefix = [1]
+        postfix = [0] * len(nums)
+        output = []
+        running_mult = 1
+        for i in range(len(nums)):
+            running_mult *= nums[i]
+            prefix.append(running_mult)
+        running_mult = 1
+        index = len(postfix) - 1
+        postfix[index] = 1
+        index -= 1
+        i = len(nums) - 1
+        while i > 0:
+            running_mult *= nums[i]
+            postfix[index] = running_mult
+            index -= 1
+            i -= 1
+        print(postfix)
+        for a, b in zip(prefix, postfix):
+            output.append(a * b)
+
         return output
