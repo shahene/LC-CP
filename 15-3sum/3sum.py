@@ -1,30 +1,40 @@
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
         '''
-        given an integery arary nums, return all triplets 
-        solution should not contain duplicate triplets
-        nums[i] + nums[j] + nums[k] == 0
+        returning triplets [nums[i], nums[j], nums[k]]
+        where nums[i] + nums[j] + nums[k] == 0.
+        [1, 1, 1]
+        => no solution so return empty array
+
+        must not contain duplicate triplets
+        so need to acount for duplicate elements somehow
+
+        plan:
         sort nums
-        use two pointers to find other two numbers
-        skip duplicates (which would be same number at same position)
+        fix nums[i]
+        use 2 pointer to find -nums[i] as sum of two numbers
+        because -nums[i] + nums[i] = 0
+        after solution found, skip duplicate elements
+
+        O(n^2) time complexity, O(n) space for sorting
         '''
+
         nums.sort()
-        solution_set = []
+        output = []
         for i in range(len(nums)):
-            if i != 0 and nums[i] == nums[i-1]: continue
-            l, r = i + 1, len(nums) - 1
+            if i != 0 and nums[i] == nums[i-1]:
+                continue
+            l, r = i + 1, len(nums) - 1 
             while l < r:
-                total = nums[l] + nums[r] + nums[i]
-                if total < 0:
+                current_sum = nums[i] + nums[l] + nums[r]
+                if current_sum < 0:
                     l += 1
-                elif total > 0:
+                elif current_sum > 0:
                     r -= 1
                 else:
-                    solution_set.append([nums[l], nums[r], nums[i]])
+                    output.append([nums[i], nums[l], nums[r]])
                     l += 1
                     r -= 1
                     while l < len(nums) and nums[l] == nums[l-1]:
                         l += 1
-            
-
-        return solution_set
+        return output
