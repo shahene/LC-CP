@@ -1,13 +1,15 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        seen = set()
-        while n != 1:
-            if n in seen:
-                return False # cycle
-            seen.add(n)
-            # calc sum of squares of digits
+        def number_sum(s):
             total = 0
-            for num in str(n):
-                total += int(num) ** 2
-            n = total
-        return True
+            while s:
+                digit = s % 10
+                total += (digit ** 2)
+                s //= 10
+            return total
+        slow, fast = number_sum(n), number_sum(number_sum(n))
+        while slow != fast and slow != 1:
+            slow = number_sum(slow)
+            fast = number_sum(number_sum(fast))
+        
+        return slow == 1
