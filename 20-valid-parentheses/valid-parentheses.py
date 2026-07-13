@@ -1,19 +1,27 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        '''
         stack = []
-        closing_bracket_map = {
-            ')': '(',
-            ']': '[',
-            '}': '{'
+        input string is valid if open brackets must match closing brackets
+        [({})]
+        most recent closing bracket added to stack
+        pop most recent 
+        '''
+        bracket_map = {
+            '(': ')',
+            '{': '}',
+            '[': ']'
         }
+
+        stack = []
         for bracket in s:
-            if bracket in closing_bracket_map:
+            if bracket in bracket_map:
+                stack.append(bracket)
+            else:
                 if stack:
-                    opening = stack.pop()
-                    if opening != closing_bracket_map[bracket]:
-                        return False
+                    b = stack.pop()
+                    b_closing = bracket_map[b]
+                    if b_closing != bracket: return False
                 else:
                     return False
-            else:
-                stack.append(bracket)
         return len(stack) == 0
