@@ -13,7 +13,20 @@ class Solution:
         recursively pass through the tree's left and right subtrees
         base case: return 1
         return max(left, right)
+
+        BFS
+
+        Iterative DFS
         '''
-        if not root:
-            return 0
-        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+        
+        stack = [[root, 1]]
+        res = 0
+        while stack:
+            node, depth = stack.pop()
+            if node:
+                res = max(res, depth)
+                stack.append([node.left, depth + 1])
+                stack.append([node.right, depth + 1])
+        return res
+
+        
