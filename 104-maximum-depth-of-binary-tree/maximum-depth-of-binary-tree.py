@@ -6,9 +6,14 @@
 #         self.right = right
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        m_depth = 1
-        return self.max_depth(root, m_depth)
-    def max_depth(self, node, m_depth):
-        if not node:
+        '''
+        input: root of a binary tree
+        output: int (maximum depth of binary tree)
+
+        recursively pass through the tree's left and right subtrees
+        base case: return 1
+        return max(left, right)
+        '''
+        if not root:
             return 0
-        return max(self.max_depth(node.left, m_depth) + 1, self.max_depth(node.right, m_depth) + 1)
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
