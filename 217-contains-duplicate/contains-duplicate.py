@@ -1,5 +1,9 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        num_counter = collections.Counter(nums)
-        if len(num_counter) < len(nums): return True
-        return False
+        '''
+        input: integer array, return true if any value appears at least twice in the array
+        output: boolean (true for duplicate, false for non duplicate)
+
+        
+        '''
+        return len(collections.Counter(nums)) < len(nums)
