@@ -6,30 +6,31 @@
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         '''
-        input: head of linked list
-        output: new head of reversed linked list
+        input: head of a linked list
+        output: reversed list
 
-        edge cases: given no head, 1 node in l.l.
-
-        we can use a prev pointer to reassign
-        new next pointers (imagine linked list was reversed, what would be next pointers of the nodes that we traverse through in their current order)
-
-        1 => None
-        2 => 1
-        3 => 2
-
-        use prev to keep track of prev node
-        assign current node's next pointer to prev
-        update prev to current node
-        move current node up
+        edge cases: given 1 node as linkedlist
+        provided Node Class:
+        class Listnode:
+            def __init__(self, value, next=None):
+                self.value = value
+                self.next = next
+        
+        use a prev pointer to reasssign next pointers from the beginning of the list
+        prev = None
+        tmp = current_node.next
+        current_node.next = prev
+        prev = current_node
+        current_node = tmp
 
         return prev at the end
+        
         '''
-        prev = None
         current = head
+        prev = None
         while current:
-            temp = current.next
+            tmp = current.next
             current.next = prev
             prev = current
-            current = temp
+            current = tmp
         return prev
