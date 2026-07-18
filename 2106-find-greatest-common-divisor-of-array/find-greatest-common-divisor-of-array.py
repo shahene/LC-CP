@@ -1,8 +1,10 @@
 class Solution:
     def findGCD(self, nums: List[int]) -> int:
-        smallest, largest = min(nums), max(nums)
-        gcd = 1
-        for i in range(1, largest + 1):
-            if smallest % i == 0 and largest % i == 0:
-                gcd = i
-        return gcd
+        # implement euclid's algorithm
+        minimum, maximum = min(nums), max(nums)
+        while minimum != maximum:
+            if maximum > minimum:
+                maximum -= minimum
+            else:
+                minimum -= maximum
+        return minimum
