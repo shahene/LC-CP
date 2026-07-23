@@ -1,12 +1,13 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t): return False
-        s_sorted = sorted(s)
-        t_sorted = sorted(t)
-        index = 0
-        while index < len(s):
-            if s_sorted[index] != t_sorted[index]:
-                return False
-            index += 1
+        char_ordering = [0] * 26
+        for n in s:
+            index = ord(n) - ord('a')
+            char_ordering[index] += 1
+        for n in t:
+            index = ord(n) - ord('a')
+            if char_ordering[index] == 0: return False
+            char_ordering[index] -= 1
+            if char_ordering[index] < 0: return False
         return True
-        
