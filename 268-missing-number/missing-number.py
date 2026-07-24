@@ -14,5 +14,8 @@ class Solution:
         #
         
         '''
-        n = len(nums)
-        return sum(range(n + 1)) - sum(nums)
+        missing = len(nums)
+        for i, n in enumerate(nums):
+            missing ^= i
+            missing ^= n
+        return missing
