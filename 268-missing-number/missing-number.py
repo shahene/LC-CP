@@ -6,11 +6,13 @@ class Solution:
         [0, n]
         output: the number that is missing from this range
 
-        match
-        ^, |, &, ~
-        '''
-        nums.sort()
-        for i in range(len(nums) + 1):
-            if i == len(nums) or i != nums[i]:
-                return i
+        one approach besides sorting or hashmap
+        is to compare sums ?
+
+
+        
         #
+        
+        '''
+        n = len(nums)
+        return sum(range(n + 1)) - sum(nums)
