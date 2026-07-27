@@ -1,14 +1,18 @@
 class Solution:
     def sortArrayByParity(self, nums: List[int]) -> List[int]:
-        beg, end = 0, len(nums) - 1
-        # how to find parity of number?
-        # use
-        while beg < end:
-            if nums[beg] & 1 == 1:
-                tmp = nums[end]
-                nums[end] = nums[beg]
-                nums[beg] = tmp
-                end -= 1
+        '''
+        nums = [3, 1, 2, 4]
+        nums = [4, 1, 2, 3]
+        nums = [4, 1, 2, 3]
+        nums = [4, 2, 1, 3]
+        '''
+        left, right = 0, len(nums) - 1
+        index = 0
+        while index < right:
+            if nums[index] & 1 == 0:
+                left += 1
+                index += 1
             else:
-                beg += 1
+                nums[index], nums[right] = nums[right], nums[index]
+                right -= 1
         return nums
