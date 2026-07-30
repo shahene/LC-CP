@@ -33,7 +33,8 @@ class Solution:
         9-h
 
         '''
-        word_length, offset, count = len(word), 0, 0
+        word_length, count = len(word), 0
+        if word_length == 0: return 0
         phone_mapping = collections.defaultdict(list)
         index = 0
         # build mapping
@@ -45,15 +46,12 @@ class Solution:
                 word_length -= 1
         # count min
         word_length = len(word)
-        while word_length:
-            for n in phone_mapping:
-                length_phone_mapping = len(phone_mapping[n])
-                offset = 0
-                for i in range(length_phone_mapping):
-                    count += (offset + 1)
-                    offset += 1
-                    word_length -= 1
-                    if word_length == 0: return count
-        return count
-
+        for n in phone_mapping:
+            length_phone_mapping = len(phone_mapping[n])
+            offset = 0
+            for i in range(length_phone_mapping):
+                count += (offset + 1)
+                offset += 1
+                word_length -= 1
+                if word_length == 0: return count
         
