@@ -1,11 +1,15 @@
 class Solution:
     def findMissingElements(self, nums: List[int]) -> List[int]:
+        '''
+        optimal approach uses boolean array
+        instead of allocating a size of res to be largest
+
+        '''
+        res = []
         smallest, largest = min(nums), max(nums)
-        res = [0] * largest
+        seen = [False] * (largest - smallest + 1)
         for i in range(len(nums)):
-            res[nums[i] - 1] = nums[i]
-        missing_numbers = []
-        for i in range(len(res)):
-            if res[i] == 0 and i >= smallest - 1 and i <= largest - 1: 
-                missing_numbers.append(i + 1)
-        return missing_numbers
+            seen[nums[i] - smallest] = True
+        for i, n in enumerate(seen):
+            if not n: res.append(i + smallest)
+        return res
