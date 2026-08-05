@@ -6,15 +6,27 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        current_path, all_paths = [], []
-        self.path_recursive(root, current_path, all_paths, targetSum)
-        return all_paths
-    def path_recursive(self, root, current_path, all_paths, targetSum):
-        if not root: return
-        current_path.append(root.val)
-        if not root.left and not root.right and root.val == targetSum:
-            all_paths.append(list(current_path))
-        else:
-            self.path_recursive(root.left, current_path, all_paths, targetSum - root.val)
-            self.path_recursive(root.right, current_path, all_paths, targetSum - root.val)
-        del current_path[-1]
+        '''
+        given the root of a binary tree and an integer targetSum, return all root-to-leaf
+        paths where the sum of the node values in the path equals targetSum
+        each path should be returned as a list of the node values
+
+        need to backtrack at some poin
+        '''
+        possible_path = []
+        res = []
+        def helper(root, targetSum):
+            if not root:
+                return
+
+            possible_path.append(root.val)
+            
+            if not root.left and not root.right and targetSum == root.val:
+                res.append(tuple(possible_path))
+            helper(root.left, targetSum - root.val)
+            helper(root.right, targetSum - root.val)
+            possible_path.pop()
+        helper(root, targetSum)
+        for i, n in enumerate(res):
+            res[i] = list(n)
+        return res
