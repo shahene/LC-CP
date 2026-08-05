@@ -7,26 +7,8 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         '''
-        input: root of a binary tree
-        output: int (maximum depth of binary tree)
-
-        recursively pass through the tree's left and right subtrees
-        base case: return 1
-        return max(left, right)
-
-        BFS
-
-        Iterative DFS
+        
         '''
-        
-        stack = [[root, 1]]
-        res = 0
-        while stack:
-            node, depth = stack.pop()
-            if node:
-                res = max(res, depth)
-                stack.append([node.left, depth + 1])
-                stack.append([node.right, depth + 1])
-        return res
-
-        
+        if not root:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
