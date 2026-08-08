@@ -6,25 +6,12 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        '''
-        height-balanced = depth never differs by more than one
-        find max height of left and right subtrees make sure their abs difference is no greater than 1
-        '''
-        def height(node):
-            if not node:
-                return 0
-            return 1 + max(height(node.left), height(node.right))
-
-        if not root:
-            return True
-            
-        h = abs(height(root.left) - height(root.right))
-        if h >= 2: 
-            return False
-
-
+        def find_height(node):
+            if not node: return 0
+            return 1 + max(find_height(node.left), find_height(node.right))
         
+        if not root: return True
+        left_height = find_height(root.left)
+        right_height = find_height(root.right)
+        if abs(left_height - right_height) > 1: return False
         return self.isBalanced(root.left) and self.isBalanced(root.right)
-        
-
-       
