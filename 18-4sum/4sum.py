@@ -1,24 +1,24 @@
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        res = []
         nums.sort()
-        output = []
         for i in range(len(nums) - 3):
-            if i > 0 and nums[i] == nums[i-1]:
+            if i != 0 and nums[i] == nums[i - 1]:
                 continue
             for j in range(i + 1, len(nums) - 2):
-                if j - 1 != i and nums[j] == nums[j-1]:
+                if j != i + 1 and nums[j] == nums[j - 1]:
                     continue
-                l, r = j + 1, len(nums) - 1
-                while l < r:
-                    total_sum = nums[l] + nums[r] + nums[j] + nums[i]
+                k, l = j + 1, len(nums) - 1
+                while k < l:
+                    total_sum = nums[i] + nums[j] + nums[k] + nums[l]
                     if total_sum < target:
-                        l += 1
+                        k += 1
                     elif total_sum > target:
-                        r -= 1
+                        l -= 1
                     else:
-                        output.append([nums[i], nums[j], nums[l], nums[r]])
-                        l += 1
-                        r -= 1
-                        while l < len(nums) and nums[l] == nums[l-1]:
-                            l += 1
-        return output
+                        res.append([nums[i], nums[j], nums[k], nums[l]])
+                        k += 1
+                        l -= 1
+                        while k < len(nums) and nums[k] == nums[k - 1]:
+                            k += 1
+        return res
