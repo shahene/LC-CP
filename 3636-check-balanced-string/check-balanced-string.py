@@ -3,7 +3,7 @@ class Solution:
         even_sum, odd_sum = 0, 0
         for i, n in enumerate(num):
             if i % 2 == 0: 
-                even_sum += int(n)
+                even_sum += (ord(n) - ord('0'))
             else:
-                odd_sum += int(n)
+                odd_sum += (ord(n) - ord('0'))
         return even_sum == odd_sum
