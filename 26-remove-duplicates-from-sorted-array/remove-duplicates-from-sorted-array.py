@@ -1,15 +1,27 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        index, next_num_index = 1, 1
-        prev = nums[0]
-        k = 1
+        '''
+        input: list of nums
+        output: integer representing the number of unique elements k
+
+        unique_ptr = 0
+        index = 0
         while index < len(nums):
-            if nums[index] != prev:
-                nums[next_num_index] = nums[index]
-                next_num_index += 1
-                prev = nums[index]
-                k += 1
-            index += 1
-        return k
-        
-        
+            if index == 0 or nums[index] != nums[unique_ptr - 1]:
+                nums[unique_ptr] = nums[index]
+                index += 1
+                unique_ptr += 1
+            else:
+                index += 1
+        return unique_ptr + 1
+        '''
+        unique_ptr = 0
+        index = 0
+        while index < len(nums):
+            if index == 0 or nums[index] != nums[unique_ptr - 1]:
+                nums[unique_ptr] = nums[index]
+                index += 1
+                unique_ptr += 1
+            else:
+                index += 1
+        return unique_ptr
