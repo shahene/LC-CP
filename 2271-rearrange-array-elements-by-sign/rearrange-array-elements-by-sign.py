@@ -6,26 +6,16 @@ class Solution:
         one positive and one negative
         then iterate through the array swappig elements
         '''
-        pos_array, neg_array, res = collections.deque([]), collections.deque([]), []
+        res = [0] * len(nums)
+        pos_index, neg_index = 0, 1
         for n in nums:
             if n > 0:
-                pos_array.append(n)
+                res[pos_index] = n
+                pos_index += 2
             else:
-                neg_array.append(n)
-        pos = True
-        p_i, n_i = 0, 0
-        while p_i < len(pos_array) or n_i < len(neg_array):
-            if pos:
-                element = pos_array[p_i]
-                p_i += 1
-
-            else:
-                element = neg_array[n_i]
-                n_i += 1
-            res.append(element)
-            pos = not pos
+                res[neg_index] = n
+                neg_index += 2
         return res
-
             
             
 
