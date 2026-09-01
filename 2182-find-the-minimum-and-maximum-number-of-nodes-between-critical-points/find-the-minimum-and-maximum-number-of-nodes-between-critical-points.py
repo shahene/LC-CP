@@ -5,24 +5,30 @@
 #         self.next = next
 class Solution:
     def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
-        critical_indices_array = []
-        index = 0
+        '''
+        important point:
+        min-> most adjaccent indices
+        -> can have prev index variable: cur_index
+        max -> first and last
+        '''
+        cur_index = 0
         curr = head
-        prev = None
+        prev, prev_index, last_index, first_index = None, None, None, None
+        minDist, maxDist = math.inf, -math.inf
+        length = 0
         while curr and curr.next:
             if prev:
                 current_val = curr.val
                 if (current_val < prev and current_val < curr.next.val) or (current_val > prev and current_val > curr.next.val):
-                    critical_indices_array.append(index)
+                    if prev_index: minDist = min(minDist, cur_index - prev_index)
+                    if not first_index: first_index = cur_index
+                    prev_index = cur_index
+                    last_index = cur_index
+                    length += 1
             prev = curr.val
             curr = curr.next
-            index += 1
-        if len(critical_indices_array) < 2: return [-1, -1]
-        minDist, maxDist = math.inf, -math.inf
-        critical_indices_array.sort()
-        maxDist = critical_indices_array[-1] - critical_indices_array[0]
-        for i in range(1, len(critical_indices_array)):
-            if critical_indices_array[i] - critical_indices_array[i-1] < minDist:
-                minDist = critical_indices_array[i] - critical_indices_array[i-1]
+            cur_index += 1
+        if length < 2: return [-1, -1]
+        maxDist = last_index - first_index
         return [minDist, maxDist]
 
