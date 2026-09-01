@@ -1,25 +1,20 @@
 import collections
 class Solution:
     def largestInteger(self, nums: List[int], k: int) -> int:
-        counter = {}
-        l = 0
-        for r in range(len(nums)):
-            if r >= k - 1:
-                for i in range(l, r + 1):
-                    number = nums[i]
-                    if number not in counter:
-                        counter[number] = [0, False]
-                    if counter[number][1] == False:
-                        counter[number][0] += 1
-                        counter[number][1] = True
-                for n in counter:
-                    counter[n][1] = False
-                l += 1
-        max_num = -1
-        for n in counter:
-            if counter[n][0] == 1:
-                max_num = max(max_num, n)
-        return max_num
+        counter = collections.Counter(nums)
+        if k == 1:
+            max_sol = max((x for x, freq in counter.items() if freq == 1), default=-1)
+            return max_sol
+        if k == len(nums):
+            max_sol = max(nums)
+            return max_sol
+        max_sol = -1
+        if counter[nums[0]] == 1:
+            max_sol = max(max_sol, nums[0])
+        if counter[nums[-1]] == 1:
+            max_sol = max(max_sol, nums[-1])
+        return max_sol
+
 
 
     '''
