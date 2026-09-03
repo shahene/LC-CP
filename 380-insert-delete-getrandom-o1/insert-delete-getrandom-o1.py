@@ -1,35 +1,32 @@
-import random
 class RandomizedSet:
 
     def __init__(self):
-        self.num_map = {}
-        self.num_list = []
+        '''
+        removal from list:
+        remove from the map in O(1) time - great
 
+        '''
+        self.value_map = {}
+        self.array = []
+        self.idx = 0
     def insert(self, val: int) -> bool:
-        if val in self.num_map:
-            return False
-        else:
-            self.num_map[val] = len(self.num_list)
-            self.num_list.append(val)
+        if val not in self.value_map:
+            self.value_map[val] = self.idx
+            self.idx += 1
+            self.array.append(val)
             return True
-
+        return False
     def remove(self, val: int) -> bool:
-        if val in self.num_map:
-            index = self.num_map[val]
-            tmp_end = self.num_list[-1]
-            self.num_list[index] = self.num_list[-1]
-            self.num_list.pop()
-            self.num_map[tmp_end] = index
-            del self.num_map[val]
-            return True
-        else:
-            return False
-        
+        if val not in self.value_map:
+            return  False
+        del self.value_map[val]
+        return True
 
     def getRandom(self) -> int:
-        return random.choice(self.num_list)
-
-
+        while True:
+            random_number = random.choice(list(self.value_map.keys()))
+            if random_number in self.value_map:
+                return random_number
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()
 # param_1 = obj.insert(val)
