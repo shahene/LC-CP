@@ -8,24 +8,22 @@ class Solution:
             set l to i and r to i + 1
             and expand with two chars instead of 1 (like in odd length)
         '''
-        res_length, starting_substr, ending_substr = 0, 0, 0
-        for i in range(len(s)):
-            l, r = i, i
-            while l in range(len(s)) and r in range(len(s)) and s[l] == s[r]:
-                if (r - l + 1) > res_length:
-                    starting_substr = l
-                    ending_substr = r
-                    res_length = r - l + 1
+        n = len(s)
+        longest = ''
+        def expand(l, r):
+            while l in range(n) and r in range(n) and s[l] == s[r]:
                 l -= 1
                 r += 1
-            l, r = i, i + 1
-            while l in range(len(s)) and r in range(len(s)) and s[l] == s[r]:
-                if (r - l + 1) > res_length:
-                    starting_substr = l
-                    ending_substr = r
-                    res_length = r - l + 1
-                l -= 1
-                r += 1
-        return s[starting_substr: ending_substr + 1]
+            return s[l + 1: r]
+
+        for i in range(n):
+            odd_palindrome = expand(i, i)
+            even_palindrome = expand(i, i + 1)
+            if len(odd_palindrome) > len(longest):
+                longest = odd_palindrome
+            if len(even_palindrome) > len(longest):
+                longest = even_palindrome
+        return longest
+
 
             
