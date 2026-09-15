@@ -1,32 +1,31 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         '''
-        process string
-        start from character, expand leftwards and rightwards
-        if mismatch;  
-        resLength = 0
-        res = ''
-        do for both odd and even length strings
-        while loop checking if palindrome so far (out of bounds etc)
-        if r - l + 1 > resLength:
-            resLength = r - l + 1
-            res = s[l: r + 1]
+        pretend that each character is middle
+        check left and right if they are palindromes
+        goes down to O(n^2)
+        for even length palindrome edge case:
+            set l to i and r to i + 1
+            and expand with two chars instead of 1 (like in odd length)
         '''
-        res_length, res = 0, ''
+        res_length, starting_substr, ending_substr = 0, 0, 0
         for i in range(len(s)):
             l, r = i, i
-            while l >= 0 and r < len(s) and s[l] == s[r]:
+            while l in range(len(s)) and r in range(len(s)) and s[l] == s[r]:
                 if (r - l + 1) > res_length:
+                    starting_substr = l
+                    ending_substr = r
                     res_length = r - l + 1
-                    res = s[l: r + 1]
                 l -= 1
                 r += 1
             l, r = i, i + 1
-            while l >= 0 and r < len(s) and s[l] == s[r]:
+            while l in range(len(s)) and r in range(len(s)) and s[l] == s[r]:
                 if (r - l + 1) > res_length:
+                    starting_substr = l
+                    ending_substr = r
                     res_length = r - l + 1
-                    res = s[l: r + 1]
-                l -= 1 
+                l -= 1
                 r += 1
-        return res
+        return s[starting_substr: ending_substr + 1]
 
+            
