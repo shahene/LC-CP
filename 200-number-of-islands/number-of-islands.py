@@ -1,26 +1,30 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        rows, cols = len(grid), len(grid[0])
-        visited_set = set()
-        num_islands = 0
-        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        count = 0
+        visited = set()
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if self.explore(grid, r, c, visited):
+                    count += 1
+        return count
+    
+    def explore(self, grid, r, c, visited):
+        row_inbounds = 0 <= r and r < len(grid)
+        col_inbounds = 0 <= c and c < len(grid[0])
+        if not row_inbounds or not col_inbounds: return False
 
-        def bfs(r, c):
-            queue = collections.deque([(r, c)])
-            while queue:
-                row, col = queue.popleft()
-                for dr, dc in directions:
-                    nr, nc = row + dr, col + dc
-                    if nr in range(rows) and nc in range(cols) and grid[nr][nc] == '1' and (nr, nc) not in visited_set:
-                        visited_set.add((nr, nc))
-                        queue.append((nr, nc))
+        if grid[r][c] == '0': return False
+
+        if (r, c) in visited:
+            return False
+        visited.add((r, c))
+        self.explore(grid, r + 1, c, visited)
+        self.explore(grid, r - 1, c, visited)
+        self.explore(grid, r, c + 1, visited)
+        self.explore(grid, r, c - 1, visited)
+
+        return True
 
 
-        for r in range(rows):
-            for c in range(cols):
-                if r in range(rows) and c in range(cols) and grid[r][c] == '1' and (r, c) not in visited_set:
-                    bfs(r, c)
-                    visited_set.add((r, c))
-                    num_islands += 1
-        return num_islands
-                    
+
+
