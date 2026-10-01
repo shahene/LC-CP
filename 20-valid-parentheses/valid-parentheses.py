@@ -7,21 +7,19 @@ class Solution:
         most recent closing bracket added to stack
         pop most recent 
         '''
-        bracket_map = {
-            '(': ')',
-            '{': '}',
-            '[': ']'
-        }
-
         stack = []
-        for bracket in s:
-            if bracket in bracket_map:
-                stack.append(bracket)
+        mapp = {
+            ')': '(',
+            ']': '[',
+            '}': '{'
+        }
+        for char in s:
+            if char not in mapp:
+                stack.append(char)
             else:
-                if stack:
-                    b = stack.pop()
-                    b_closing = bracket_map[b]
-                    if b_closing != bracket: return False
-                else:
-                    return False
-        return len(stack) == 0
+                if not stack: return False
+                popped_char = stack.pop()
+                if mapp[char] != popped_char: return False
+        return True if not stack else False
+
+
